@@ -3,6 +3,8 @@ package com.mybatis.test.demo_mybatis.controller;
 import com.mybatis.test.demo_mybatis.entity.User;
 import com.mybatis.test.demo_mybatis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -15,7 +17,8 @@ import java.util.List;
  */
 
 @RequestMapping("/user")
-@RestController
+//@RestController
+@Controller
 public class UserController {
 
 
@@ -24,11 +27,14 @@ public class UserController {
 
 
     @GetMapping("/getallusers")
-    public List<User> getAllUsers(){
-        return userService.query();
+    public String getAllUsers(Model model){
+
+        model.addAttribute("list",userService.query());
+        return "/user/list";
     }
 
     @GetMapping("/findbyid")
+    @ResponseBody
     public User findById(Integer id){
         return userService.findById(id);
     }
