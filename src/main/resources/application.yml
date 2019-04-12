@@ -1,0 +1,43 @@
+
+server:
+  port: 8081
+spring:
+  application:
+    name: server-mybatis
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.99.78:3306/demo?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+# MyBatis
+mybatis:
+  #cache-enabled: true
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: classpath:mapper/*Mapper.xml
+  # 搜索指定包别名
+  type-aliases-package: com.mybatis.test.demo_mybatis.entity
+  configuration:
+    lazy-loading-enabled: true #延迟加载
+    aggressive-lazy-loading: false
+
+    # 加载全局的配置文件
+    #configLocation: classpath:mapper/mybatis-config.xml
+#显示执行sql
+logging:
+  level:
+    com.mybatis.test.demo_mybatis.dao.UserDao: debug
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+
+
+
+
+
+

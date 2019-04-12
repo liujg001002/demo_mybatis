@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.test.demo_mybatis.dao.UserDao">
+   
+    <resultMap id="userAndRole" type="User">
+        <id     column="id" property="id" javaType="Integer" jdbcType="INTEGER" ></id>
+        <result column="name" property="name" javaType="String" jdbcType="VARCHAR" ></result>
+        <result column="age" property="age" javaType="Integer" jdbcType="INTEGER" ></result>
+        <collection property="roles" javaType="java.util.List" ofType="Role" >
+            <id column="r_id" property="id" javaType="Integer" jdbcType="INTEGER" />
+            <result column="role_name" property="roleName" javaType="String" jdbcType="VARCHAR" />
+        </collection>
+        <!--<association property="" resultMap="">
+            <id column="" property="" jdbcType="" javaType=""></id>
+            <result column="" property="" javaType="" jdbcType=""></result>
+        </association>-->
+
+    </resultMap>
+
+    <select id="queryUserAndRole" resultMap="userAndRole">
+        SELECT u.id,u.name,u.age,r.id r_id ,r.role_name from `user` u,role r
+        where u.r_id = r.id
+    </select>
+    
+    <select id="query" resultType="User">
+       select * from  `USER`
+   </select>
+
+    <select id="queryOrFindById" parameterType="Integer" resultType="User">
+        SELECT * FROM `USER`
+         <choose>
+             <when test=" id != null">
+                 WHERE id = #{id}
+             </when>
+             <otherwise>
+                 WHERE 1 = 1
+             </otherwise>
+         </choose>
+    </select>
+
+    <select id="queryByIds"  resultType="User">
+        SELECT * FROM  `user`
+        <where>
+            and
+            <foreach collection="list" item="uid" open=" id in (" close=")" separator=",">
+                #{uid}
+            </foreach>
+        </where>
+    </select>
+
+
+   <select id="findById" resultType="User" parameterType="Integer">
+       SELECT * from `USER` WHERE id = #{0}
+   </select>
+
+    <!--插入语句 并获取自增长主键的id（不支持Oracle） 传入对象-->
+   <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+       INSERT `USER`(`name`,age) VALUES (#{name} ,#{age})
+   </insert>
+
+    <!--获取 Oracle 主键-->
+    <insert id="insertByOracle" parameterType="User" >
+
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            select my_seq.nextval from dual
+        </selectKey>
+        INSERT `USER`(`name`,age) VALUES (#{name} ,#{age})
+    </insert>
+
+   <update id="update" parameterType="User" >
+       UPDATE `user` set `name` = #{name} ,age = #{age} WHERE  id = #{id}
+   </update>
+
+   <update id="updateByCondition" parameterType="User">
+       UPDATE `user`
+       <set>
+           <if test="name != null" >
+               `name` = #{name},
+           </if>
+           <if test="age != null">
+               age = #{age},
+           </if>
+       </set>
+         WHERE  id = #{id}
+   </update>
+
+    <update id="updateByArgs" parameterType="User">
+        UPDATE `USER`
+         <trim prefix="set" prefixOverrides="," >
+             <if test="name != null" >
+                 `name` = #{name}
+             </if>
+             <if test="age != null">
+                 age = #{age}
+             </if>
+         </trim>
+    </update>
+
+   <delete id="delete" parameterType="Integer">
+       DELETE FROM `user` where id = #{id}
+   </delete>
+
+    <!-- 此查询会造成N+1查询 -->
+    <!--<resultMap id="userAndInfo" type="User">
+        <id column="id" property="id" ></id>
+        <result column="name" property="name" ></result>
+        <result column="age" property="age" ></result>
+        <association column="info_id" property="userInfo"  javaType="UserInfo" select="userInfo"></association>
+    </resultMap>
+    
+    <select id="userInfo" parameterType="Integer" resultType="UserInfo">
+        select id,id_num idNum ,sex from user_info WHERE  id = #{info_id}
+    </select>
+    <select id="queryUserHaveInfo" resultMap="userAndInfo">
+        select * from `USER`
+    </select>-->
+
+
+    <resultMap id="userAndInfo" type="User">
+        <id column="id" property="id" ></id>
+        <result column="name" property="name" ></result>
+        <result column="age" property="age" ></result>
+        <association  property="userInfo"  javaType="UserInfo">
+            <id column="info_id" property="id"></id>
+            <result column="id_num" property="idNum" ></result>
+            <result column="sex" property="sex" ></result>
+        </association>
+    </resultMap>
+    <select id="queryUserHaveInfo" resultMap="userAndInfo">
+        select u.id,u.`name`,u.age,u.info_id ,i.id_num, i.sex from `USER` u, user_info i WHERE u.info_id = i.id
+    </select>
+
+
+</mapper>
+

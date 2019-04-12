@@ -1,0 +1,59 @@
+package com.mybatis.test.demo_mybatis.controller;
+
+import com.mybatis.test.demo_mybatis.entity.User;
+import com.mybatis.test.demo_mybatis.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * @author liujianguo
+ * @data 2019/4/1
+ * 描述：
+ */
+
+@RequestMapping("/user")
+@RestController
+public class UserController {
+
+
+    @Autowired
+    UserService userService;
+
+
+    @GetMapping("/getallusers")
+    public List<User> getAllUsers(){
+        return userService.query();
+    }
+
+    @GetMapping("/findbyid")
+    public User findById(Integer id){
+        return userService.findById(id);
+    }
+    @PostMapping("/insert")
+    public boolean insert(String name,Integer age){
+        User user = new User(null,name,age);
+        boolean flag =  userService.insert(user);
+        return flag;
+    }
+
+    @GetMapping("/update")
+    public boolean update(Integer id){
+        return userService.update(new User(id,"update",12));
+    }
+
+    @GetMapping("/delete")
+    public boolean delete(Integer id){
+        return userService.delete(id);
+    }
+
+    @GetMapping("/querybyids")
+    public List<User> queryByIds(Integer[] ids){
+        List<Integer> list = Arrays.asList(ids);
+        return userService.queryByIds(list);
+    }
+
+
+}
