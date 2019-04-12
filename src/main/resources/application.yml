@@ -1,4 +1,3 @@
-
 server:
   port: 8081
 spring:
@@ -9,7 +8,7 @@ spring:
     url: jdbc:mysql://192.168.99.78:3306/demo?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     username: root
     password: root
-    type: com.alibaba.druid.pool.DruidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource #使用druid连接池
 # MyBatis
 mybatis:
   #cache-enabled: true
@@ -23,7 +22,7 @@ mybatis:
 
     # 加载全局的配置文件
     #configLocation: classpath:mapper/mybatis-config.xml
-#显示执行sql
+#mybatis显示执行sql
 logging:
   level:
     com.mybatis.test.demo_mybatis.dao.UserDao: debug
