@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author liujianguo
  * @data 2019/4/1
- * 描述：
+ * 描述：用户信息
  */
 @Data
 @AllArgsConstructor

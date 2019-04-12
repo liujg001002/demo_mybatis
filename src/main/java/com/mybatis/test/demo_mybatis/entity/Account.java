@@ -6,15 +6,17 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author liujianguo
- * @data 2019/4/2
- * 描述：用户其他信息
+ * @data 2019/4/12
+ * 描述：账户信息
  */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserInfo {
+public class Account {
 
     private Integer id;
-    private String idNum;
-    private String sex;
+    private User user;
+    private String loginName;
+    private String password;
+    private boolean enable;
 }

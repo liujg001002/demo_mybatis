@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * @author liujianguo
  * @data 2019/4/2
- * 描述：
+ * 描述：角色
  */
 @AllArgsConstructor
 @NoArgsConstructor
