@@ -61,5 +61,18 @@ public class UserController {
         return userService.queryByIds(list);
     }
 
+    @GetMapping({"/","/index"})
+    public String index(){
+       return "index";
+    }
+    @GetMapping("/jumpUserAdd")
+    public String jumpUserAdd(){
+        return "user/add";
+    }
+    @GetMapping("/jumpUserUpdate")
+    public String jumpUserUpdate(Integer id){
+        return "user/update";
+    }
+
 
 }
