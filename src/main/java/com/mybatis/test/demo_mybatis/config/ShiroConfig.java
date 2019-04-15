@@ -1,6 +1,6 @@
 package com.mybatis.test.demo_mybatis.config;
 
-import com.mybatis.test.demo_mybatis.entity.UserRealm;
+import com.mybatis.test.demo_mybatis.shiro.realm.UserRealm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
