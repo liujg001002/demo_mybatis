@@ -76,10 +76,39 @@
 			<version>27.1-jre</version>
 		</dependency>
 
+		<!--引入AOP依赖start-->
+		<!--cglib包是用来动态代理用的,基于类的代理；
+		aspectjrt和aspectjweaver是与aspectj相关的包,用来支持切面编程的；
+		aspectjrt包是aspectj的runtime包；
+		aspectjweaver是aspectj的织入包；-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.6.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.11</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.3.9.RELEASE</version>
+		</dependency>
+		<!--引入AOP依赖end-->
 
-
-
+		<!--mysql连接-->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
