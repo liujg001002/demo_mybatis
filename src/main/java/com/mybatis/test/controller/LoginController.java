@@ -1,8 +1,7 @@
 package com.mybatis.test.controller;
 
-import com.mybatis.test.entity.SysUser;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -14,48 +13,61 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @author liujianguo
- * @data 2019/4/15
- * 描述：
+ * @Description
+ * @Author sgl
+ * @Date 2018-06-11 17:51
  */
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
-
-
-    @GetMapping("/jumpLogin")
-    public String jumpLogin(Model model){
-        return "login/login";
-    }
-    @GetMapping("/jumpLogout")
-    public String jumpLogout(){
-        return "login/login";
-    }
-
-
-    @PostMapping("/login")
-    public String login(SysUser sysUser, Model model){
-
-        //执行认证逻辑
-        final Subject subject = SecurityUtils.getSubject();
-        //封装用户名密码
-        UsernamePasswordToken token = new UsernamePasswordToken(sysUser.getUserName(), sysUser.getPassword());
-
-        try {
-            subject.login(token);
-        }catch (UnknownAccountException e){
-            model.addAttribute("name","用户名不存在");
-            return "login/login";
-        }catch (IncorrectCredentialsException e){
-            model.addAttribute("name","密码错误");
-            return "login/login";
-        }catch (AuthenticationException e){
-            model.addAttribute("name","用户名/密码错误");
-            return "login/login";
+    /**
+     * get请求，登录页面跳转
+     * @return
+     */
+    @GetMapping("/login")
+    public String login() {
+        //如果已经认证通过，直接跳转到首页
+        if (SecurityUtils.getSubject().isAuthenticated()) {
+            return "redirect:/index";
         }
-        System.out.println("sysUser:--->"+ sysUser);
-        return "index";
+        return "login";
+    }
 
+    /**
+     * post表单提交，登录
+     * @param username
+     * @param password
+     * @param model
+     * @return
+     */
+    @PostMapping("/login")
+    public Object login(String username, String password, Model model) {
+        Subject user = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        try {
+            //shiro帮我们匹配密码什么的，我们只需要把东西传给它，它会根据我们在UserRealm里认证方法设置的来验证
+            user.login(token);
+            return "redirect:/index";
+        } catch (UnknownAccountException e) {
+            //账号不存在和下面密码错误一般都合并为一个账号或密码错误，这样可以增加暴力破解难度
+            model.addAttribute("message", "账号不存在！");
+        } catch (DisabledAccountException e) {
+            model.addAttribute("message", "账号未启用！");
+        } catch (IncorrectCredentialsException e) {
+            model.addAttribute("message", "密码错误！");
+        } catch (Throwable e) {
+            model.addAttribute("message", "未知错误！");
+        }
+        return "login";
+    }
+
+    /**
+     * 退出
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout() {
+        SecurityUtils.getSubject().logout();
+        return "login";
     }
 }

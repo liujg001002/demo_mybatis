@@ -1,78 +1,36 @@
 package com.mybatis.test.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mybatis.test.entity.User;
 import com.mybatis.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author liujianguo
- * @data 2019/4/1
- * 描述：
+ * @Description
+ * @Author sgl
+ * @Date 2018-05-02 14:59
  */
-
-@RequestMapping("/user")
-//@RestController
-@Controller
+@RestController
 public class UserController {
 
-
     @Autowired
-    UserService userService;
+    private UserService userService;
 
-
-    @GetMapping("/getallusers")
-    public String getAllUsers(Model model){
-
-        model.addAttribute("list",userService.query());
-        return "/user/list";
+    @GetMapping("/users")
+    public PageInfo<User> lists(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "10") int pageSize) {
+        PageHelper.startPage(pageNo,pageSize);
+        PageInfo<User> pageInfo = new PageInfo<>(userService.getUsers());
+        return pageInfo;
     }
 
-    @GetMapping("/findbyid")
-    @ResponseBody
-    public User findById(Integer id){
-        return userService.findById(id);
-    }
-    @PostMapping("/insert")
-    public boolean insert(String name,Integer age){
-        User user = new User(null,name,age);
-        boolean flag =  userService.insert(user);
-        return flag;
-    }
-
-    @GetMapping("/update")
-    public boolean update(Integer id){
-        return userService.update(new User(id,"update",12));
-    }
-
-    @GetMapping("/delete")
-    public boolean delete(Integer id){
-        return userService.delete(id);
-    }
-
-    @GetMapping("/querybyids")
-    public List<User> queryByIds(Integer[] ids){
-        List<Integer> list = Arrays.asList(ids);
-        return userService.queryByIds(list);
-    }
-
-    @GetMapping({"/","/index"})
-    public String index(){
-       return "index";
-    }
-    @GetMapping("/jumpUserAdd")
-    public String jumpUserAdd(){
-        return "user/add";
-    }
-    @GetMapping("/jumpUserUpdate")
-    public String jumpUserUpdate(Integer id){
-        return "user/update";
-    }
-
+    /*@GetMapping("/user/{id}")
+    public User selectUserById(@PathVariable("id") Long id){
+        return userService.selectById(id);
+    }*/
 
 }

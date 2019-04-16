@@ -1,22 +1,27 @@
 package com.mybatis.test.service;
 
+import com.github.pagehelper.Page;
+import com.mybatis.test.dao.UserDao;
 import com.mybatis.test.entity.User;
-
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
- * @author liujianguo
- * @data 2019/4/1
- * 描述：
+ * @Description
+ * @Author sgl
+ * @Date 2018-05-02 15:01
  */
-public interface UserService {
+@Service
+public class UserService {
 
-   public List<User> query();
-   public User findById(Integer id);
-   public boolean insert(User user);
-   public boolean update(User user);
-   public boolean delete(Integer id);
-   public List<User> queryByIds(List<Integer> list);
-   List<User> queryUserAndRole();
+    @Autowired
+    private UserDao userDao;
 
+    public Page<User> getUsers() {
+        return userDao.getUsers();
+    }
+
+    public User selectById(long id){
+        return userDao.selectByPrimaryKey(id);
+    }
 }

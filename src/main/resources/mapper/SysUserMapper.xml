@@ -33,10 +33,10 @@
 
     </select>
     
-    <select id="findByLoginName" resultMap="sysUser" parameterType="String">
+    <select id="findByUserName" resultMap="sysUser" parameterType="String">
         <include refid="findAll" ></include>
         <where>
-            AND  a.user_name = #{userName}
+            AND  user_name = #{userName}
         </where>
    </select>
 
