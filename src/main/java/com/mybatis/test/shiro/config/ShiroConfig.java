@@ -86,7 +86,7 @@ public class ShiroConfig {
 
         UserRealm userRealm = new UserRealm();
         //添加凭证
-        //userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return userRealm;
     }
 
