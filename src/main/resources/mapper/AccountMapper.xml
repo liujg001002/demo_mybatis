@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.test.demo_mybatis.dao.AccountDao">
+   
+    <resultMap id="account" type="Account">
+        <id     column="id" property="id" javaType="Integer" jdbcType="INTEGER" ></id>
+        <result column="login_name" property="loginName" javaType="String" jdbcType="VARCHAR" ></result>
+        <result column="password" property="password" javaType="String" jdbcType="VARCHAR" ></result>
+        <result column="enable" property="enable" javaType="Boolean" jdbcType="TINYINT" ></result>
+        <!--<collection property="roles" javaType="java.util.List" ofType="Role" >
+            <id column="r_id" property="id" javaType="Integer" jdbcType="INTEGER" />
+            <result column="role_name" property="roleName" javaType="String" jdbcType="VARCHAR" />
+        </collection>-->
+        <association column="user_id" property="user" javaType="User">
+            <id column="user_id" property="id" javaType="Integer" jdbcType="INTEGER"></id>
+            <result column="name" property="name" javaType="String" jdbcType="VARCHAR"></result>
+            <result column="age" property="age" javaType="Integer" jdbcType="INTEGER" ></result>
+        </association>
+
+    </resultMap>
+
+    <sql id="findAll" >
+        SELECT a.id ,a.login_name,a.password,a.enable,a.user_id,u.name ,u.age from `user` u,account a
+        where u.id = a.user_id
+    </sql>
+
+    <select id="findById" resultMap="account" parameterType="Integer">
+        <include refid="findAll" ></include>
+         AND a.id = #{id}
+    </select>
+    
+    <select id="findByLoginName" resultMap="account" parameterType="String">
+        <include refid="findAll" ></include>
+        AND  a.login_name = #{loginName}
+   </select>
+
+   <!--<delete id="deleteById" parameterType="Integer">
+       DELETE FROM `account` where id = #{id}
+   </delete>-->
+   <update id="deleteById" parameterType="Integer" >
+       UPDATE account SET  enable = FALSE  WHERE id = #{id}
+
+   </update>
+
+
+
+</mapper>
+
