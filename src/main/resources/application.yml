@@ -15,7 +15,7 @@ mybatis:
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapper-locations: classpath:mapper/*Mapper.xml
   # 搜索指定包别名
-  type-aliases-package: com.mybatis.test.demo_mybatis.entity
+  type-aliases-package: com.mybatis.test.entity
   configuration:
     lazy-loading-enabled: true #延迟加载
     aggressive-lazy-loading: false

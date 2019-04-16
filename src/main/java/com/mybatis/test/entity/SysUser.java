@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Account {
+public class SysUser {
 
-    private Integer id;
-    private User user;
-    private String loginName;
+    private Integer userId;
+    private String userName;
+    private String fullName;
     private String password;
-    private boolean enable;
+    private String salt;
 }

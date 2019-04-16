@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.test.dao.SysUserDao">
+   
+    <resultMap id="sysUser" type="SysUser">
+        <id     column="user_id" property="userId" javaType="Integer" jdbcType="INTEGER" ></id>
+        <result column="user_name" property="userName" javaType="String" jdbcType="VARCHAR" ></result>
+        <result column="full_name" property="fullName" javaType="String" jdbcType="VARCHAR" ></result>
+        <result column="password" property="password" javaType="String" jdbcType="VARCHAR" ></result>
+        <result column="salt" property="salt" javaType="String" jdbcType="VARCHAR" ></result>
+        <!--<collection property="roles" javaType="java.util.List" ofType="Role" >
+            <id column="r_id" property="id" javaType="Integer" jdbcType="INTEGER" />
+            <result column="role_name" property="roleName" javaType="String" jdbcType="VARCHAR" />
+        </collection>-->
+        <!--<association column="user_id" property="user" javaType="User">
+            <id column="user_id" property="id" javaType="Integer" jdbcType="INTEGER"></id>
+            <result column="name" property="name" javaType="String" jdbcType="VARCHAR"></result>
+            <result column="age" property="age" javaType="Integer" jdbcType="INTEGER" ></result>
+        </association>-->
+
+    </resultMap>
+
+    <sql id="findAll" >
+        SELECT * from `sys_user`
+    </sql>
+
+    <select id="findById" resultMap="sysUser" parameterType="Integer">
+        <include refid="findAll" ></include>
+        <where>
+            AND user_id = #{userId}
+        </where>
+
+    </select>
+    
+    <select id="findByLoginName" resultMap="sysUser" parameterType="String">
+        <include refid="findAll" ></include>
+        <where>
+            AND  a.user_name = #{userName}
+        </where>
+   </select>
+
+   <delete id="deleteById" parameterType="Integer">
+       DELETE FROM `sys_user` where user_id = #{userId}
+   </delete>
+   <!--<update id="deleteById" parameterType="Integer" >
+       UPDATE sysUser SET  enable = FALSE  WHERE id = #{id}
+   </update>-->
+
+
+
+</mapper>
+

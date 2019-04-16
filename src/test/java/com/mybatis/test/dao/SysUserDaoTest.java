@@ -1,6 +1,6 @@
 package com.mybatis.test.dao;
 
-import com.mybatis.test.entity.Account;
+import com.mybatis.test.entity.SysUser;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,26 +15,26 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AccountDaoTest {
+public class SysUserDaoTest {
 
     @Autowired
-    AccountDao accountDao;
+    SysUserDao sysUserDao;
     @Test
     public void findById() throws Exception {
 
-        Account account = accountDao.findById(1);
-        Assert.assertNotNull(account);
+        SysUser sysUser = sysUserDao.findById(1);
+        Assert.assertNotNull(sysUser);
     }
 
     @Test
-    public void findByLoginName() throws Exception {
-        Account account = accountDao.findByLoginName("zs");
-        Assert.assertNotNull(account);
+    public void findByUserName() throws Exception {
+        SysUser sysUser = sysUserDao.findByUserName("zs");
+        Assert.assertNotNull(sysUser);
     }
 
     @Test
     public void deleteById() throws Exception {
-        Boolean flag = accountDao.deleteById(1);
+        Boolean flag = sysUserDao.deleteById(1);
         Assert.assertTrue(flag);
     }
 

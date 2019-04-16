@@ -1,6 +1,6 @@
 package com.mybatis.test.controller;
 
-import com.mybatis.test.entity.Account;
+import com.mybatis.test.entity.SysUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -35,12 +35,12 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public String login(Account account, Model model){
+    public String login(SysUser sysUser, Model model){
 
         //执行认证逻辑
         final Subject subject = SecurityUtils.getSubject();
         //封装用户名密码
-        UsernamePasswordToken token = new UsernamePasswordToken(account.getLoginName(),account.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(sysUser.getUserName(), sysUser.getPassword());
 
         try {
             subject.login(token);
@@ -54,7 +54,7 @@ public class LoginController {
             model.addAttribute("name","用户名/密码错误");
             return "login/login";
         }
-        System.out.println("account:--->"+account);
+        System.out.println("sysUser:--->"+ sysUser);
         return "index";
 
     }
