@@ -46,6 +46,7 @@ public class UserRealm extends AuthorizingRealm {
         SysUser sysUser = (SysUser) principalCollection.getPrimaryPrincipal();
         List<String> sysPermissions = sysPermissionService.selectPermissionByUserId(sysUser.getUserId());
 
+        //添加权限
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(sysPermissions);
         LOGGER.info("doGetAuthorizationInfo");

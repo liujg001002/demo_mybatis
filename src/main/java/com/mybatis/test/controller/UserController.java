@@ -28,9 +28,9 @@ public class UserController {
         return pageInfo;
     }
 
-    /*@GetMapping("/user/{id}")
+    @GetMapping("/user/{id}")
     public User selectUserById(@PathVariable("id") Long id){
         return userService.selectById(id);
-    }*/
+    }
 
 }
