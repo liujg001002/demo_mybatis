@@ -96,7 +96,7 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>1.6.11</version>
@@ -115,7 +115,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 			<version>4.3.9.RELEASE</version>
-		</dependency>
+		</dependency>-->
 		<!--引入AOP依赖end-->
 
 		<!--mysql连接-->
