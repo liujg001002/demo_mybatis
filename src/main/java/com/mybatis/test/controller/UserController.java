@@ -7,7 +7,10 @@ import com.mybatis.test.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.subject.Subject;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +37,7 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     //@RequiresRoles("admin")//具有admin角色访问
-    //@RequiresPermissions("systemRole")
+    @RequiresPermissions("systemRole")
     public User selectUserById(@PathVariable("id") Long id){
 
         final Subject subject = SecurityUtils.getSubject();

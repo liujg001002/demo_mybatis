@@ -86,15 +86,15 @@
 			<version>27.1-jre</version>
 		</dependency>
 
-		<!--引入AOP依赖start-->
+		<!--引入AOP依赖  好像aop影响shiro注解正常使用 start-->
 		<!--cglib包是用来动态代理用的,基于类的代理；
 		aspectjrt和aspectjweaver是与aspectj相关的包,用来支持切面编程的；
 		aspectjrt包是aspectj的runtime包；
 		aspectjweaver是aspectj的织入包；-->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<!--<dependency>
 			<groupId>org.aspectj</groupId>

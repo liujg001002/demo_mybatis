@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
-@EnableAspectJAutoProxy//开启aop
+//@EnableAspectJAutoProxy//开启aop
 @MapperScan("com.mybatis.test.dao")//mybatis扫描包
 public class DemoMybatisApplication {
 
