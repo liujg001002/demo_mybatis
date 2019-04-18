@@ -1,10 +1,7 @@
 package com.mybatis.test.aop;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -54,5 +51,10 @@ public class WebLogAspect {
     public void doAfterReturning(Object ret) throws Throwable {
         // 处理完请求，返回内容
         logger.info("RESPONSE : " + ret);
+    }
+
+    @AfterThrowing("execution(public * com.mybatis.test.controller..*.*(..))")
+    public void doAfterThrowing(){
+        System.out.println(" do exception ........ ");
     }
 }

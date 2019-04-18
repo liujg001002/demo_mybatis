@@ -3,6 +3,7 @@ package com.mybatis.test.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.shiro.authz.Permission;
 
 import java.io.Serializable;
 

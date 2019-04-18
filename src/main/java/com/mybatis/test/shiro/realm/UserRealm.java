@@ -1,5 +1,6 @@
 package com.mybatis.test.shiro.realm;
 
+import com.google.common.collect.Lists;
 import com.mybatis.test.entity.SysUser;
 import com.mybatis.test.service.SysPermissionService;
 import com.mybatis.test.service.SysUserService;
@@ -49,6 +50,8 @@ public class UserRealm extends AuthorizingRealm {
         //添加权限
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(sysPermissions);
+        //添加角色
+        //info.addRoles(Lists.newArrayList());
         LOGGER.info("doGetAuthorizationInfo");
         return info;
     }

@@ -9,6 +9,8 @@ spring:
     username: root
     password: root
     type: com.alibaba.druid.pool.DruidDataSource #使用druid连接池
+#  aop:
+#    proxy-target-class: true
 # MyBatis
 mybatis:
   #cache-enabled: true
@@ -25,7 +27,7 @@ mybatis:
 #mybatis显示执行sql
 logging:
   level:
-    com.mybatis.test.demo_mybatis.dao.UserDao: debug
+    com.mybatis.test.dao: debug
 
 # PageHelper分页插件
 pagehelper:
